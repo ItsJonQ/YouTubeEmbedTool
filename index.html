@@ -1,0 +1,69 @@
+
+<!doctype html>
+<html lang="en" ng-app="ytToolApp">
+<head>
+	<title>YouTube Embed Tool</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+</head>
+<body>
+<div class="container">
+	<h2>YouTube Embed Tool</h2>
+	<div ng-controller="EventController">
+		<div class="row">
+			<div class="col-md-12">
+				<form role="form">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon">Link</span>
+						<input type="text" class="form-control" ng-model="embedPaste" ng-change="inputUpdate(embedPaste)">
+					</div>
+					<div ng-show="embedShow" style="display: none;">
+						<hr>
+						<div class="form-group">
+							<a type="button" class="btn btn-success" href="{{embedCode}}" target="_blank">Watch The Video on YouTube</a>
+						</div>
+						<div class="form-group">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default" ng-click="embedWidthUpdate(630)"><strong>Regular</strong> (630px)</button>
+								<button type="button" class="btn btn-default"ng-click="embedWidthUpdate(960)"><strong>Full Width</strong> (960px)</button>
+								<div class="input-group">
+									<input type="number" class="form-control" placeholder="Custom Width" ng-change="embedWidthUpdate(customWidth)" ng-model="customWidth">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<textarea class="form-control" ng-bind-html-unsafe="embedCodeOutput"></textarea>
+						</div>
+						<div class="form-group">
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon">Thumbnail URL</span>
+								<textarea class="form-control" ng-bind-html-unsafe="videoThumbnail"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<a class="btn btn-primary" href="{{videoThumbnail}}" download >Download Thumbnail</a>
+						</div>
+						<div class="form-group">
+							<img src="{{videoThumbnail}}" style="max-width: 100%; height: auto;">
+						</div>
+					</div>
+					<div ng-show="embedError" style="display: none;">
+						<hr>
+						<h4>There was something wrong with the embed code :(</h4>
+						Example of a working embed code: <strong>http://www.youtube.com/watch?v=0eOA1c9Fyeg</strong>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="lib/jquery.js"></script>
+<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="lib/angular/angular.min.js"></script>
+<script type="text/javascript" src="lib/angular/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="lib/angular/angular-resource.min.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/controllers/EventController.js"></script>
+</body>
+</html>
