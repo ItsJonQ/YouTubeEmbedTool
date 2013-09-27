@@ -10,13 +10,14 @@ ytToolApp.controller('EventController',
 			$scope.videoThumbnail = '';
 			$scope.embedError = false;
 			$scope.embedShow = false;
-			$scope.embedWidth = 630;	
+			$scope.embedWidth = 630;
+
+			$scope.videoDetails = {'title': '', 'category': '', 'user': '', 'thumbnailFile': 'thumbnail'};
 		};
 
 		$scope.eventReset();
 
 		$scope.eventError = function(){
-			console.log('Embed Error');
 			$scope.eventReset();
 			$scope.embedError = true;
 		};
@@ -43,19 +44,34 @@ ytToolApp.controller('EventController',
 			videoID: ''
 		}	
 
-		$scope.fetchYT = $resource('https://gdata.youtube.com/feeds/api/videos/:action', 
-			{ action: 'utUPth77L_o', v: 2, alt: 'json', callback: 'JSON_CALLBACK' },
-			{ get:{method: 'JSONP' }}
-		);
-
-		$scope.validateYT = function(){
-			console.log('Validator Initialized');
+		$scope.validateYT = function(embedID){
+			$scope.fetchYT = $resource('https://gdata.youtube.com/feeds/api/videos/:action', 
+				{ action: embedID, v: 2, alt: 'json', callback: 'JSON_CALLBACK' },
+				{ get:{ method: 'JSONP' }}
+			);
 			$scope.fetchYT.get(function(result) {
-				console.log(result);
+				var embedCodeHTML = '<iframe width="'+$scope.ytVideoAttr.videoWidth+'" height="'+$scope.ytVideoAttr.videoHeight+'" src="http://www.youtube.com/embed/'+$scope.ytVideoAttr.videoID+'" frameborder="0" allowfullscreen></iframe>';
+				var videoThumbnailURL = 'http://img.youtube.com/vi/'+$scope.ytVideoAttr.videoID+'/maxresdefault.jpg';
+				var data = result.entry;
+
+				$scope.embedCodeOutput = embedCodeHTML;
+				$scope.videoThumbnail = videoThumbnailURL;
+				if(embedCodeHTML !== null ) {
+					$scope.embedShow = true;
+				} else {
+					$scope.embedShow = false;
+				}
+
+				// Video Info
+				$scope.videoDetails.title = data.title.$t;
+				$scope.videoDetails.category = data.media$group.media$category[0].label;
+				$scope.videoDetails.user = data.media$group.media$credit[0].$t;
+				$scope.videoDetails.thumbnailFile = data.title.$t;
+
+			}, function() {
+				$scope.eventError();
 			});
 		};
-
-		$scope.validateYT();
 
 		$scope.inputUpdate = function(embed) {
 			if(embed !== '') {
@@ -67,15 +83,7 @@ ytToolApp.controller('EventController',
 							videoThumbnailURL;
 						$scope.ytVideoAttr.videoID = embedArray[3].split('=')[1];
 						$scope.embedCode = embed;
-						embedCodeHTML = '<iframe width="'+$scope.ytVideoAttr.videoWidth+'" height="'+$scope.ytVideoAttr.videoHeight+'" src="http://www.youtube.com/embed/'+$scope.ytVideoAttr.videoID+'" frameborder="0" allowfullscreen></iframe>';
-						videoThumbnailURL = 'http://img.youtube.com/vi/'+$scope.ytVideoAttr.videoID+'/maxresdefault.jpg'
-						$scope.embedCodeOutput = embedCodeHTML;
-						$scope.videoThumbnail = videoThumbnailURL;
-						if(embedCodeHTML !== null ) {
-							$scope.embedShow = true;
-						} else {
-							$scope.embedShow = false;
-						}
+						$scope.validateYT($scope.ytVideoAttr.videoID);
 					} else {
 						$scope.eventError();
 					}
