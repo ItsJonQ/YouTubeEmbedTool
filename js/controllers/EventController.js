@@ -77,7 +77,7 @@ ytToolApp.controller('EventController',
 			if(embed !== '') {
 				$scope.embedError = false;
 				$scope.embedShow = false;
-				if(embed !== null) {
+				if(embed.indexOf("youtube.com") !=-1 ) {
 					var embedArray, embedID, embedIDArray;
 					embedArray = embed.split('/');
 					embedIDArray = embedArray[3].split('=')[1];
@@ -91,7 +91,9 @@ ytToolApp.controller('EventController',
 					} else {
 						$scope.eventError();
 					}
-				} 
+				} else {
+					$scope.eventError();
+				}
 			} else {
 				$scope.eventReset();
 			}
