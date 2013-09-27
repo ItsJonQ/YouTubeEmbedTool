@@ -34,8 +34,8 @@ ytToolApp.controller('EventController',
 				$scope.ytVideoAttr.videoWidth = 0;			
 			}
 			$scope.ytVideoAttr.videoHeight = $scope.embedSizeMathHD($scope.ytVideoAttr.videoWidth);
-			$scope.inputUpdate($scope.embedCode);
-			console.log($scope.embedCode);
+			
+			$scope.embedCodeOutput = '<iframe width="'+$scope.ytVideoAttr.videoWidth+'" height="'+$scope.ytVideoAttr.videoHeight+'" src="http://www.youtube.com/embed/'+$scope.ytVideoAttr.videoID+'" frameborder="0" allowfullscreen></iframe>';
 		}
 
 		$scope.ytVideoAttr = {
