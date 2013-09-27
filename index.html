@@ -12,17 +12,20 @@
 		<div class="row">
 			<div class="col-md-12">
 				<form role="form">
-					<div class="input-group input-group-lg">
-						<span class="input-group-addon">Link</span>
-						<input type="text" class="form-control" ng-model="embedPaste" ng-change="inputUpdate(embedPaste)">
+					<div class="form-group">
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon">Link</span>
+							<input type="text" class="form-control" ng-model="embedPaste" ng-change="inputUpdate(embedPaste)">
+						</div>
 					</div>
 					<div ng-show="embedShow" style="display: none;">
+						<div class="alert alert-success clearfix">
+							Awesome! We were able to fetch your video embed code. <a type="button" class="btn btn-success" href="{{embedCode}}" target="_blank" style="margin-left: 15px;">Watch The Video on YouTube</a>
+						</div>
 						<hr>
 						<div class="form-group">
-							<a type="button" class="btn btn-success" href="{{embedCode}}" target="_blank">Watch The Video on YouTube</a>
-						</div>
-						<div class="form-group">
-							<div class="btn-group">
+							<label>Adjust Embed Code Size</label>
+							<div class="btn-group" style="display: block;">
 								<button type="button" class="btn btn-default" ng-click="embedWidthUpdate(630)"><strong>Regular</strong> (630px)</button>
 								<button type="button" class="btn btn-default"ng-click="embedWidthUpdate(960)"><strong>Full Width</strong> (960px)</button>
 								<div class="input-group">
@@ -31,24 +34,26 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label>Embed Code</label>
 							<textarea class="form-control" ng-bind-html-unsafe="embedCodeOutput"></textarea>
 						</div>
 						<div class="form-group">
-							<div class="input-group input-group-lg">
-								<span class="input-group-addon">Thumbnail URL</span>
-								<textarea class="form-control" ng-bind-html-unsafe="videoThumbnail"></textarea>
-							</div>
+							<label>Thumbnail URL</label>
+							<textarea class="form-control" ng-bind-html-unsafe="videoThumbnail"></textarea>
 						</div>
 						<div class="form-group">
 							<a class="btn btn-primary" href="{{videoThumbnail}}" download="{{videoDetails.thumbnailFile}}">Download Thumbnail</a>
+							<a class="btn btn-default" href="{{videoThumbnail}}" target="_blank">View Thumbnail</a>
 						</div>
 						<div class="form-group">
 							<img src="{{videoThumbnail}}" style="max-width: 100%; height: auto;">
 						</div>
 					</div>
 					<div ng-show="embedError" style="display: none;">
+						<div class="alert alert-danger">
+							Oh snap! We were unable to fetch the embed code for your YouTube video.
+						</div>
 						<hr>
-						<h4>There was something wrong with the embed code :(</h4>
 						Example of a working embed code: <strong>http://www.youtube.com/watch?v=0eOA1c9Fyeg</strong>
 					</div>
 				</form>

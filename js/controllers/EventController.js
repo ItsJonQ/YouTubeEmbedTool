@@ -75,13 +75,17 @@ ytToolApp.controller('EventController',
 
 		$scope.inputUpdate = function(embed) {
 			if(embed !== '') {
+				$scope.embedError = false;
+				$scope.embedShow = false;
 				if(embed !== null) {
-					var embedArray, embedID;
+					var embedArray, embedID, embedIDArray;
 					embedArray = embed.split('/');
-					if(embedArray[3]) {
+					embedIDArray = embedArray[3].split('=')[1];
+					embedID = embedIDArray.split('#')[0];
+					if(embedID) {
 						var embedCodeHTML,
 							videoThumbnailURL;
-						$scope.ytVideoAttr.videoID = embedArray[3].split('=')[1];
+						$scope.ytVideoAttr.videoID = embedID;
 						$scope.embedCode = embed;
 						$scope.validateYT($scope.ytVideoAttr.videoID);
 					} else {
