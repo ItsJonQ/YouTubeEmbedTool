@@ -23,6 +23,8 @@
 							Awesome! We were able to fetch your video embed code. <a type="button" class="btn btn-success" href="{{embedCode}}" target="_blank" style="margin-left: 15px;">Watch The Video on YouTube</a>
 						</div>
 						<hr>
+						<h3>{{videoDetails.title}}</h3>
+						<hr>
 						<div class="form-group">
 							<label>Adjust Embed Code Size</label>
 							<div class="btn-group" style="display: block;">
@@ -39,7 +41,7 @@
 						</div>
 						<div class="form-group">
 							<label>Thumbnail URL</label>
-							<textarea class="form-control" ng-bind-html-unsafe="videoThumbnail"></textarea>
+							<input class="form-control" value="{{videoThumbnail}}">
 						</div>
 						<div class="form-group">
 							<a class="btn btn-primary" href="{{videoThumbnail}}" download="{{videoDetails.thumbnailFile}}">Download Thumbnail</a>
