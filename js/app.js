@@ -1,3 +1,3 @@
 'use strict';
 
-var ytToolApp = angular.module('ytToolApp', ['ngSanitize']);
+var ytToolApp = angular.module('ytToolApp', ['ngSanitize', 'ngResource']);

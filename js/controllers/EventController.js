@@ -1,7 +1,7 @@
 'use strict';
 
 ytToolApp.controller('EventController', 
-	function EventController($scope) {
+	function EventController($scope, $resource) {
 		console.log('"EventsController" was initiated.');
 
 		$scope.eventReset = function(){
@@ -19,13 +19,6 @@ ytToolApp.controller('EventController',
 			console.log('Embed Error');
 			$scope.eventReset();
 			$scope.embedError = true;
-		};
-
-		$scope.eventDestroy = function() {
-			console.log('Embed Destroy');
-			$scope.embedShow = false;
-			$scope.embedCode = '';
-			$scope.videoThumbnail = '';
 		};
 
 		$scope.embedSizeMathHD = function(width) {
@@ -49,6 +42,20 @@ ytToolApp.controller('EventController',
 			videoHeight: $scope.embedSizeMathHD($scope.embedWidth),
 			videoID: ''
 		}	
+
+		$scope.fetchYT = $resource('https://gdata.youtube.com/feeds/api/videos/:action', 
+			{ action: 'utUPth77L_o', v: 2, alt: 'json', callback: 'JSON_CALLBACK' },
+			{ get:{method: 'JSONP' }}
+		);
+
+		$scope.validateYT = function(){
+			console.log('Validator Initialized');
+			$scope.fetchYT.get(function(result) {
+				console.log(result);
+			});
+		};
+
+		$scope.validateYT();
 
 		$scope.inputUpdate = function(embed) {
 			if(embed !== '') {
