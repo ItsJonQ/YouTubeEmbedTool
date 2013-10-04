@@ -19,8 +19,11 @@
 						</div>
 					</div>
 					<div ng-show="embedShow" style="display: none;">
-						<div class="alert alert-success clearfix">
+						<div class="alert alert-success clearfix" ng-hide="embedWarning">
 							Awesome! We were able to fetch your video embed code. <a type="button" class="btn btn-success" href="{{embedCode}}" target="_blank" style="margin-left: 15px;">Watch The Video on YouTube</a>
+						</div>
+						<div class="alert alert-warning clearfix"  ng-show="embedWarning">
+							The video you're looking for might be private, unlisted, or doesn't exist. The embed code / thumbnail might not be available.
 						</div>
 						<hr>
 						<h3>{{videoDetails.title}}</h3>
@@ -44,7 +47,7 @@
 							<input class="form-control" value="{{videoThumbnail}}">
 						</div>
 						<div class="form-group">
-							<a class="btn btn-primary" href="{{videoThumbnail}}" download="{{videoDetails.thumbnailFile}}">Download Thumbnail</a>
+							<a class="btn btn-primary" href="{{videoThumbnail}}" download="{{videoDetails.thumbnailFile}}.jpg">Download Thumbnail</a>
 							<a class="btn btn-default" href="{{videoThumbnail}}" target="_blank">View Thumbnail</a>
 						</div>
 						<div class="form-group">
